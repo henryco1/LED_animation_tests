@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1633460158 source:e:\coding\projects\nucleol432\led_animation_tests\led_animation_tests\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<math.h>
+
