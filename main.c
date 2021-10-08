@@ -5,37 +5,37 @@
 #include <time.h>
 #include <math.h>
 
-unsigned int GRID_WIDTH = 4;
-unsigned int GRID_HEIGHT = 13;
+unsigned int GRID_ROW = 13;
+unsigned int GRID_COL = 4;
 
-void printBuffer(unsigned int data[GRID_WIDTH*GRID_HEIGHT] ) {
+void printBuffer(unsigned int data[GRID_ROW*GRID_COL] ) {
     printf("===========\n");
-    for (int i=0; i<GRID_WIDTH*GRID_HEIGHT; i++) {
-        printf("%d, ", data[i]);
-        if ((i+1) % GRID_WIDTH == 0) {
-            printf("\n");
+    for (int i=0; i<GRID_ROW; i++) {
+        for (int j=0; j<GRID_COL; j++) {
+            printf("%d, ", data[i*j]);
         }
+        printf("\n");
     }
     printf("\n");
 }
 
-void spread_fire(unsigned int data[GRID_WIDTH*GRID_HEIGHT]) {
-    for (int x = 1; x < GRID_HEIGHT; x++) {
-        for (int y = 0; y < GRID_WIDTH; y++) {
+void spread_fire(unsigned int data[GRID_ROW*GRID_COL]) {
+    for (int x = 0; x < GRID_ROW-1; x++) {
+        for (int y = 0; y < GRID_COL; y++) {
             unsigned int r_val = (rand() % 3 ) - 5;
-            unsigned int prev = y * GRID_WIDTH + x;
-            unsigned int curr = prev - GRID_WIDTH;
+            unsigned int prev = y * GRID_ROW + x;
+            unsigned int curr = prev - GRID_ROW;
             data[curr] = data[prev] - (r_val & 1);
         }
     }
     printBuffer(data);
 }
 
-void init_fire_effect(unsigned int data[GRID_WIDTH*GRID_HEIGHT]) {
+void init_fire_effect(unsigned int data[GRID_ROW*GRID_COL]) {
     // init flame buffer
-    memset(data, 0, GRID_WIDTH * GRID_HEIGHT * sizeof(unsigned int));
-    for (int i=0; i<GRID_WIDTH; i++) {
-        data[(GRID_HEIGHT-1) * GRID_WIDTH + i] = 5;
+    memset(data, 0, GRID_ROW * GRID_COL * sizeof(unsigned int));
+    for (int i=0; i<GRID_ROW; i++) {
+        data[(GRID_COL-1) * GRID_ROW + i] = 5;
     }
 }
 
@@ -46,6 +46,17 @@ int main()
     unsigned int frame_buf[GRID_WIDTH*GRID_HEIGHT];
     init_fire_effect(frame_buf);
     printBuffer(frame_buf);
+
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
+    spread_fire(frame_buf);
 
     printf("Hello world!\n");
     return 0;
